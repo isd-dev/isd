@@ -1,0 +1,33 @@
+The ISD library is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 3 of the
+License, or (at your option) any later version.
+
+You should have received a copy of the GNU General Public License
+along with the LWM; see the file COPYING.  If not, see
+http://www.gnu.org/licenses/ or write to the Free Software Foundation,
+Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
+
+##############################################################################
+
+The distribution contains the following files:
+(This does not apply to code retrieved by Github.)
+
+AUTHORS     - the authors of the library
+COPYING     - the GNU General Public License, version 3
+ChangeLog   - the log of changes
+INSTALL     - How to install this library
+Makefile*   - files for building the library
+NEWS        - new features with respect to previous versions
+README      - this file
+Tests/      - test directory
+*.cpp       - source files
+*.hpp       - header files
+aclocal.m4  - automatic configuration files
+config.*    - auxiliary installation files
+configure*  - configuration files
+depcomp     - auxiliary installation file
+install-sh  - installation file
+ltmain.sh   - auxiliary installation file
+m4/         - directory containing additional configuration files
+missing     - auxiliary installation file

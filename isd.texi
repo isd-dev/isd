@@ -1,0 +1,376 @@
+\input texinfo   @c -*-texinfo-*-
+@comment %**start of header
+@setfilename isd.info
+@c documentencoding UTF-8
+@include version.texi
+@settitle ISD @value{VERSION}
+@comment %**end of header
+
+@copying
+This manual documents how to install and use the Information-Set Decoding
+Library, version @value{VERSION}, (updated @value{UPDATED}).
+
+Copyright @copyright{} 2010, ISD-team.
+
+@quotation
+Permission is granted to copy, distribute and/or modify this document under
+the terms of the GNU Free Documentation License, Version 1.2 or any later
+version published by the Free Software Foundation; with no Invariant Sections,
+with no Front-Cover Texts, and with no Back-Cover Texts.  A copy of the
+license is included in Appendix A: GNU Free Documentation License.
+@end quotation
+@end copying
+
+@dircategory Software libraries
+@direntry
+* isd: (isd).                 Information-Set Decoding Library.
+@end direntry
+
+
+@c  html <meta name=description content="...">
+@documentdescription
+How to install and use ISD, a library for information-set decoding,
+version @value{VERSION}.
+@end documentdescription
+
+@c smallbook
+@finalout
+@setchapternewpage on
+
+@iftex
+@titlepage
+@title ISD
+@subtitle The Information-Set Decoding Library
+@subtitle Edition @value{VERSION}
+@subtitle @value{UPDATED-MONTH}
+
+@author ISD-team
+@email{no@@email.yet}
+
+@tex
+\global\parindent=0pt
+\global\parskip=8pt
+\global\baselineskip=13pt
+@end tex
+
+@page
+@vskip 0pt plus 1filll
+
+@end titlepage
+@end iftex
+
+@c  Don't bother with contents for html, the menus seem adequate.
+@ifnothtml
+@contents
+@end ifnothtml
+
+@ifnottex
+@node Top
+@top ISD
+@end ifnottex
+
+@insertcopying
+
+@menu
+* Copying:: ISD Copying Conditions (LGPL).
+* Introduction to ISD:: Brief introduction to ISD.
+* Installing ISD:: How to configure and compile the ISD library.
+* Reporting Bugs::
+* ISD Interface:: ISD functions.
+* The Algorithm:: Canteaut-Chabaud.
+* References::
+* GNU Free Documentation License::
+* Function Index::
+@end menu
+
+@node Copying
+@chapter Copying
+
+The ISD library is free; this means that everyone is free to use it and free to
+redistribute it on a free basis. The library is not in the public domain; it is
+copyrighted  and  there  are   restrictions  on  its  distribution,  but  these
+restrictions are designed to permit  everything that a good cooperating citizen
+would want to do. What is not  allowed is to try to prevent others from further
+sharing any version of this library that they might get from you.
+
+Specifically, we want to make sure that  you have the right to give away copies
+of the library, that you receive source code or else can get it if you want it,
+that you can change this library or  use pieces of it in new free programs, and
+that you know you can do these things.
+
+To make sure  that everyone has such  rights, we have to forbid  you to deprive
+anyone else of  these rights. For example, if you distribute  copies of the ISD
+library, you  must give the recipients all  the rights that you  have. You must
+make sure that they, too, receive or can get the source code. And you must tell
+them their rights.
+
+Also, for our own protection, we must make certain that everyone finds out that
+there is no  warranty for the ISD  library.  If it is modified  by someone else
+and passed on, we want their recipients to know that what they have is not what
+we distributed, so  that any problems introduced by others  will not reflect on
+our reputation.
+
+The precise  conditions of  the license for  the ISD  library are found  in the
+Lesser General Public  License that accompanies the source  code.  See the file
+COPYING.LESSER.
+
+@node Introduction to ISD
+@chapter Introduction to ISD
+
+ISD  is a library  written in  C++ providing  a C  API. It  aims to  provide an
+efficient implementation of information-set decoding of binary linear codes.
+
+It tries to be portable and is known to compile with at least gcc 4.x, icc 11.x
+and Sunstudio12u1, under different Linux distributions and OpenSolaris.
+
+@c Decider si l'on garde cela
+@c One important feature of ISD depends on another library, @code{mpfi} which
+@c depends itself on @code{mpfr} and @code{gmp}.  You can still use ISD without
+@c those libraries, but some fonctionalities won't be available.
+
+A basic sample C program using ISD would be:
+
+@cartouche
+@example
+#include <isd.h>
+int main(void) @{
+    unsigned long **matrix;
+    isd_parameters param;
+    isd_stats stats;
+    int error_code;
+    /* setup of the matrix */
+    ...
+    /* setup the parameters */
+    param.n = 512;
+    param.k = 256;
+    param.w = 30;
+    ...
+    /* search for low hamming weight words */
+    error_code = isd_low_weight_words(matrix, &param, &stats);
+
+    return error_code;
+@}
+@end example
+@end cartouche
+
+@node Installing ISD
+@chapter Installing ISD
+
+To install the library, you have to do the following steps.
+
+@enumerate
+@item @code{./configure}
+
+      This  will  prepare  the  build  and  setup  options  according  to  your
+      system.  You can  give options  to specify  install directories.  See the
+      output of '@code{./configure --help}' for more information, in particular
+      if you got error messages.
+
+@c      Some  features of ISD  depends on  the library  @code{mpfi} and  you must
+@c      explicitely  add  the  option  '@code{--without-mpfi}'  if  you  are  not
+@c      interrested in them.
+
+@item @code{make}
+
+      This will compile ISD and create the libraries.
+
+@item @code{make check}
+
+      This  will  make  sure  everything  went  ok and  the  library  is  build
+      correctly. If you get  error messages, please report it (@pxref{Reporting
+      Bugs} for information on what to include in useful bug reports).
+
+@item @code{make install}
+
+      This  will   copy  the  header  file  @file{isd.h},   the  library  files
+      (@file{libisd.a}  and  possibly   others)  and  the  documentation  files
+      (@file{isd.info} and a few others) to the appropriate directories.
+
+@end enumerate
+
+@section Other @code{make} Targets
+
+There are some other useful @code{make} targets:
+
+@itemize
+@item @code{make pdf}
+
+      Create a PDF version of the manual, in @file{isd.pdf}.
+
+@item @code{make dvi}
+
+      Create a DVI version of the manual, in @file{isd.dvi}.
+
+@item @code{make ps}
+
+      Create a Postscript version of the manual, in @file{isd.ps}.
+
+@item @code{make clean}
+
+      Delete all object and archive files, but not configuration files.
+
+@item @code{make distclean}
+
+      Delete all generated files not included in the distribution.
+
+@item @code{make uninstall}
+
+      Delete all files copied by @code{make install}.
+
+@end itemize
+
+@node Reporting Bugs
+@chapter Reporting Bugs
+
+If you think you have found a bug  in the ISD library, first have a look on the
+ISD web page @url{https://github.com/isd-dev/isd} to see if you  have the latest version or if the bug is
+known, in which case you might find there a workaround.
+
+To make it  possible to reproduce the  bug, please try to provide  a test case,
+i.e.  a  small  self-content program,  using  no  other  library than  ISD.  If
+necessary provide also instructions on how to run the test case.
+
+You should also explain what goes wrong,  is it a crash or are the result wrong
+and in that case in which way.
+
+Please  include  also  compiler  version  information.  This  can  be  obtained
+with @code{gcc -v} if you're using GCC. Also, include the output of @code{uname
+-a} and the version of ISD.
+
+@node ISD Interface
+@chapter ISD Interface
+
+@section C API
+
+@deftp {Data Type} isd_parameters
+A basic (typedefed)  structure containing the different parameters  used in the
+algorithm. It contains the following members:
+
+@table @code
+@item int n
+the length of the code;
+
+@item int k
+the dimension of the code;
+
+@item int w
+the maximum target weight;
+
+@item int px, py
+we will add @var{px}-tuples of lines from X
+with @var{py}-tuples of lines from Y;
+
+@item int m
+number of trial before pivoting;
+
+@item int l
+size of the window for collision check;
+
+@item int c
+number of columns to swap at each iteration;
+
+@item int r
+number of columns to swap at once;
+
+@item int kx, ky
+X will contain @var{kx} lines and
+Y will contain @var{ky} lines,
+the intersection is kept as small as possible;
+
+@item int max_iteration
+the maximum number of iteration;
+
+@item int max_words
+the maximum number of words to return;
+
+@item unsigned int seed
+the seed used to initialize the random number generator;
+
+@item void (*callback)(unsigned long *)
+the callback function called on every word found.
+@end table
+
+For precise definitions of those parameters, @pxref{The Algorithm}.
+@end deftp
+
+TODO ** We provide a function to ease the choice of the parameters. **
+
+@deftypefun TODO int isd_set_default_parameters @
+           (int @var{n}, int @var{k}, int @var{w}, isd_parameters *@var{param})
+
+Given a  codelength @var{n}, a dimension  @var{k} and a  target weight @var{w},
+sets @var{param} to sensible values. By default, @var{maxwords} is set to 1 and
+@var{maxiter} to the maximum possible value.
+@end deftypefun
+
+@deftp {Data Type} isd_stats
+Some informations that should be available during the computation.
+@table @code
+@item int iteration
+How many iterations we made.
+
+@item int n_found
+How many solutions we found.
+@end table
+
+NB: they can  be modified as well,  e.g. if some further tests  are made before
+accepting the solutions, we can reduce @var{n_found} accordingly.
+
+@end deftp
+
+We  then  have two  groups  of  functions.  Some named  @samp{isd_decode*}  for
+correcting errors,  others named @samp{isd_low_weight*} for  finding low weight
+words. Each ones come  in two flavor depending if the input  matrix is the full
+matrix or if it's only the redundant  part of a systematic matrix in which case
+we add the suffix @samp{*_syst}.
+
+@deftypefun int isd_decode (const unsigned long **@var{matrix},@
+              const unsigned long *@var{word},@
+              const isd_parameters *@var{param},@
+              isd_stats *@var{stats})
+@end deftypefun
+@deftypefun TODO int isd_decode_syst (const unsigned long **@var{matrix},@
+              const unsigned long *@var{word},@
+              const isd_parameters *@var{param},@
+              isd_stats *@var{stats})
+@end deftypefun
+
+@deftypefun int isd_low_weight_word (const unsigned long **@var{matrix},@
+              const isd_parameters *@var{param},@
+              isd_stats *@var{stats})
+@end deftypefun
+@deftypefun int isd_low_weight_word_syst (const unsigned long **@var{matrix},@
+              const isd_parameters *@var{param},@
+              isd_stats *@var{stats})
+@end deftypefun
+
+The last argument  @var{stats} can be used within  the callback function during
+the computation  to keep track  of the number  of iterations and the  number of
+solutions found so far.
+
+@section Example
+You can find in the @code{example/}  directory a basic command line application to find
+low weight words in a linear code with generating matrix read from the standard
+input. To build it do @code{make findlowweight}. A sample invocation is in @code{script.sh}.
+
+@node The Algorithm
+@chapter The Algorithm
+
+TODO
+
+@node References
+@chapter References
+
+TODO
+
+@node GNU Free Documentation License
+@appendix GNU Free Documentation License
+
+@include fdl-1.3.texi
+
+@node Function Index
+@unnumbered Function Index
+
+@printindex fn
+
+@bye

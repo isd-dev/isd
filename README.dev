@@ -1,0 +1,10 @@
+Notes for the ISD developers
+============================
+
+To compile source code obtained from the Github repository, you need
+some GNU development utilities: aclocal, autoheader, automake,
+autoconf 2.65 (at least) and libtoolize. As some files like
+"configure" are not part of the repository, you first need to run
+"autoreconf -i". Then you can run "configure" in the usual way.
+
+All contributed code should be checked with cpplint.py.

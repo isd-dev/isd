@@ -1,0 +1,34 @@
+package "findlowweight"
+version "1.0"
+
+description "Find low weight words in a binary linear code.
+
+The generating matrix is obtained from the standard input, only '0' and '1'
+characters are considered, others are ignored. The words found are printed on
+the standard output.
+See the documentation for further details."
+
+section "Basics"
+
+option "length" n "length of the code" int required
+option "dimension" k "dimension of the code" int required
+option "weight" w "weight threshold" int required
+option "seed" s "seed of the random number generator" int default="24301" optional
+
+section "Stop conditions" sectiondesc=
+"Those options define when the program returns.\
+ The computation stops as soon as one of the condition is satisfied."
+
+option "max_iter" i "maximum number of iteration" int default="0" optional
+option "max_found" f "maximum number of different solutions" int default="1" optional
+
+section "Advanced" sectiondesc="Technical parameters, see the documentation for details."
+
+option "px" - "size of the tuples for X" int default="1" optional
+option "py" - "size of the tuples for Y" int default="1" optional
+option "kx" - "number of rows in X" int default="0" optional
+option "ky" - "number of rows in Y" int default="0" optional
+option "m" m "multiple widows before pivoting" int default="1" optional
+option "l" l "length of the window" int default="8" optional
+option "c" c "columns swapped for each pivot" int default="1" optional
+option "r" r "size of the groups for pivoting" int default="1" optional

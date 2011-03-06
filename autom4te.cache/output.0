@@ -14075,7 +14075,7 @@ _ACEOF
   LIBS="-lgslcblas $LIBS"
 
 else
-  as_fn_error $? "please install the GNU Scientific Library (gsl)" "$LINENO" 5 
+  as_fn_error $? "please install the GNU Scientific Library (GSL) developpment package" "$LINENO" 5 
 fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for gsl_rng_alloc in -lgsl" >&5
@@ -14122,7 +14122,7 @@ _ACEOF
   LIBS="-lgsl $LIBS"
 
 else
-  as_fn_error $? "please install the GNU Scientific Library (gsl)" "$LINENO" 5 
+  as_fn_error $? "please install the GNU Scientific Library (GSL) developpment package" "$LINENO" 5 
 fi
 
 

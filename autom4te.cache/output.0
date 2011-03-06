@@ -14074,11 +14074,13 @@ _ACEOF
 
   LIBS="-lgslcblas $LIBS"
 
+else
+  as_fn_error $? "please install the GNU Scientific Library (gsl)" "$LINENO" 5 
 fi
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for gsl_rng_get in -lgsl" >&5
-$as_echo_n "checking for gsl_rng_get in -lgsl... " >&6; }
-if test "${ac_cv_lib_gsl_gsl_rng_get+set}" = set; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for gsl_rng_alloc in -lgsl" >&5
+$as_echo_n "checking for gsl_rng_alloc in -lgsl... " >&6; }
+if test "${ac_cv_lib_gsl_gsl_rng_alloc+set}" = set; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
@@ -14092,33 +14094,35 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 #ifdef __cplusplus
 extern "C"
 #endif
-char gsl_rng_get ();
+char gsl_rng_alloc ();
 int
 main ()
 {
-return gsl_rng_get ();
+return gsl_rng_alloc ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_cxx_try_link "$LINENO"; then :
-  ac_cv_lib_gsl_gsl_rng_get=yes
+  ac_cv_lib_gsl_gsl_rng_alloc=yes
 else
-  ac_cv_lib_gsl_gsl_rng_get=no
+  ac_cv_lib_gsl_gsl_rng_alloc=no
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_gsl_gsl_rng_get" >&5
-$as_echo "$ac_cv_lib_gsl_gsl_rng_get" >&6; }
-if test "x$ac_cv_lib_gsl_gsl_rng_get" = x""yes; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_gsl_gsl_rng_alloc" >&5
+$as_echo "$ac_cv_lib_gsl_gsl_rng_alloc" >&6; }
+if test "x$ac_cv_lib_gsl_gsl_rng_alloc" = x""yes; then :
   cat >>confdefs.h <<_ACEOF
 @%:@define HAVE_LIBGSL 1
 _ACEOF
 
   LIBS="-lgsl $LIBS"
 
+else
+  as_fn_error $? "please install the GNU Scientific Library (gsl)" "$LINENO" 5 
 fi
 
 

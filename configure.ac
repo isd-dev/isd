@@ -17,8 +17,8 @@ AC_LANG([C++])
 
 # Checks for libraries.
 AC_CHECK_LIB([m],[cos])
-AC_CHECK_LIB([gslcblas],[cblas_dgemm])
-AC_CHECK_LIB([gsl],[gsl_rng_get])
+AC_CHECK_LIB([gslcblas],[cblas_dgemm],[],[AC_MSG_ERROR([please install the GNU Scientific Library (gsl)])])
+AC_CHECK_LIB([gsl],[gsl_rng_alloc],[],[AC_MSG_ERROR([please install the GNU Scientific Library (gsl)])])
 
 # Checks for header files.
 
